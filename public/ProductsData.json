@@ -1,0 +1,27 @@
+[
+    {
+       "id": 1,
+       "product_name": "Product A",
+       "product_description": "Lorum ipsum",
+       "is_active": true,
+       "price": "44",
+       "offer_price": "34",
+       "offer_start_at": "Mon Feb 05 2020 00:00:00 GMT+0530 (India Standard Time)",
+       "offer_end_at": "Mon Feb 06 2020 06:00:00 GMT+0530 (India Standard Time)",
+       "created_at": null,
+       "updated_at": null
+    },
+    {
+       "id": 2,
+       "product_name": "Product B",
+       "product_description": "Product detail",
+       "is_active": false,
+       "price": "54",
+       "offer_price": "40",
+       "offer_start_at": "Mon Feb 03 2020 00:00:00 GMT+0530 (India Standard Time)",
+       "offer_end_at": "Mon Feb 04 2020 04:00:00 GMT+0530 (India Standard Time)",
+       "created_at": null,
+       "updated_at": null
+    }
+ ]
+ 
