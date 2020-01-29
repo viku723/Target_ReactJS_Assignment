@@ -12,10 +12,9 @@ class ManageProducts extends Component {
         if (!this.props.isProductFetched) {
             this.props.onFetchProducts();
         }
-        
     }
     render() {
-        return(
+        return (
             <div>
                 <NavBar props={this.props}></NavBar>
                 <EnhancedTable products={this.props.products} deleteProduct={this.props.onDeleteProduct} props={this.props}></EnhancedTable>
@@ -33,7 +32,7 @@ const mapStatesToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onDeleteProduct: (ids) => dispatch({type: 'DELETE_PRODUCT', payload: ids}),
+        onDeleteProduct: (ids) => dispatch({ type: 'DELETE_PRODUCT', payload: ids }),
         onFetchProducts: () => {
             return dispatch(productActions.fetchProducts())
         }
