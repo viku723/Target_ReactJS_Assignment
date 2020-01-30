@@ -23,6 +23,9 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import Fab from '@material-ui/core/Fab';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+
 
 
 
@@ -147,8 +150,9 @@ const onDelete = (selectedId, deleteProduct) => {
 };
 
 const EnhancedTableToolbar = props => {
+  console.log('props', props)
   const classes = useToolbarStyles();
-  const { numSelected, selectedId, deleteProduct, selectedProduct } = props;
+  const { numSelected, selectedId, deleteProduct, selectedProduct, onFilterClick } = props;
 
   return (
     <Toolbar
@@ -187,7 +191,7 @@ const EnhancedTableToolbar = props => {
       ) : (
           <Tooltip title="Filter list">
             <IconButton aria-label="filter list">
-              <FilterListIcon />
+              <FilterListIcon onClick={() => props.props.onFilterClick()} />
             </IconButton>
           </Tooltip>
         )}
@@ -225,7 +229,12 @@ const useStyles = makeStyles(theme => ({
 
 export default function EnhancedTable(props) {
   console.log('props', props)
-  const rows = props.products;
+  let rows;
+  if (props.props.isFilter && props.props.filterProducts.length > 0) {
+    rows = props.props.filterProducts;
+  } else  {
+    rows = props.products;
+  }
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -292,6 +301,16 @@ export default function EnhancedTable(props) {
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <EnhancedTableToolbar numSelected={selected.length} selectedId={selected} deleteProduct={props.deleteProduct} props={props} selectedProduct={selectedProduct()} />
+        {props.props.isFilter ? (<div className={classes.root}>
+          <Grid container spacing={3}>
+            <Grid item xs={3}>
+              <TextField margin="normal" size="small" variant="outlined" id="standard-basic" label="Product name"
+                onChange={(e) => props.filter(e)} />
+            </Grid>
+          </Grid>
+        </div>) : null}
+        
+
         <TableContainer>
           <Table
             className={classes.table}

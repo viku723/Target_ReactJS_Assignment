@@ -2,7 +2,9 @@ import * as actionTypes from './actions/actionTypes';
 
 const initialState = {
     isProductFetched: false,
-    products: []
+    isFilter: false,
+    products: [],
+    filterProducts: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -18,6 +20,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.ADD_PRODUCT: {
             return {
                 ...state,
+                isFilter: false,
                 products: [
                     ...state.products,
                     action.payload
@@ -27,6 +30,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.UPDATE_PRODUCT: {
             return {
                 ...state,
+                isFilter: false,
                 products: state.products.map((product) => {
                     if (product.id == action.payload.id) {
                         return action.payload
@@ -40,6 +44,21 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 isProductFetched: true,
                 products: action.fetchedProducts
+            };
+        }
+        case 'FILTER_CLICK': {
+            return {
+                ...state,
+                isFilter: !state.isFilter,
+                filterProducts: []
+            };
+        }
+        case 'FILTER': {
+            return {
+                ...state,
+                filterProducts: state.products.filter((item) => {
+                    return item.product_name.toLowerCase().includes(action.payload.toLowerCase())
+                })
             };
         }
         default: {

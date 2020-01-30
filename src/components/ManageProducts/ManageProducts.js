@@ -13,11 +13,19 @@ class ManageProducts extends Component {
             this.props.onFetchProducts();
         }
     }
+    filter (event) {
+        event.persist()
+       this.props.onFilter(event.target.value)
+    }
+    onFilterClick() {
+        console.log('onFilterClick');
+        this.props.onFilterClick();
+    }
     render() {
         return (
             <div>
                 <NavBar props={this.props}></NavBar>
-                <EnhancedTable products={this.props.products} deleteProduct={this.props.onDeleteProduct} props={this.props}></EnhancedTable>
+                <EnhancedTable filter={this.filter} products={this.props.products} deleteProduct={this.props.onDeleteProduct} props={this.props} onFilterClick={this.onFilterClick} ></EnhancedTable>
             </div>
         );
     }
@@ -26,16 +34,20 @@ class ManageProducts extends Component {
 const mapStatesToProps = state => {
     return {
         products: state.products,
-        isProductFetched: state.isProductFetched
+        isProductFetched: state.isProductFetched,
+        isFilter: state.isFilter,
+        filterProducts: state.filterProducts
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         onDeleteProduct: (ids) => dispatch(productActions.deleteProduct(ids)),
+        onFilter: (value) => dispatch({type: 'FILTER', payload: value}),
         onFetchProducts: () => {
             return dispatch(productActions.fetchProducts())
-        }
+        },
+        onFilterClick: () => dispatch({type: 'FILTER_CLICK'}),
     }
 }
 
