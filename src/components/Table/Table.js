@@ -22,16 +22,17 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
+import Fab from '@material-ui/core/Fab';
+
 
 
 export function formatDate(date) {
-    console.log('date', date)
-    if (date == null || date == 'Invalid Date') {
-        return '';
-    }
-    const offsetMs = new Date(date).getTimezoneOffset() * 60 * 1000;
-    const dateLocal = new Date(new Date(date).getTime() - offsetMs);
-    return dateLocal.toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ");
+  if (date == null || date == 'Invalid Date') {
+    return '';
+  }
+  const offsetMs = new Date(date).getTimezoneOffset() * 60 * 1000;
+  const dateLocal = new Date(new Date(date).getTime() - offsetMs);
+  return dateLocal.toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ");
 }
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -128,30 +129,26 @@ const useToolbarStyles = makeStyles(theme => ({
   highlight:
     theme.palette.type === 'light'
       ? {
-          color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-        }
+        color: theme.palette.secondary.main,
+        backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+      }
       : {
-          color: theme.palette.text.primary,
-          backgroundColor: theme.palette.secondary.dark,
-        },
+        color: theme.palette.text.primary,
+        backgroundColor: theme.palette.secondary.dark,
+      },
   title: {
     flex: '1 1 100%',
   },
 }));
 
 const onDelete = (selectedId, deleteProduct) => {
-    console.log('selectedId', selectedId);
-    console.log('deleteProduct', deleteProduct);
-    deleteProduct(selectedId);
-    //debugger;
-  };
+  deleteProduct(selectedId);
+  //debugger;
+};
 
 const EnhancedTableToolbar = props => {
   const classes = useToolbarStyles();
   const { numSelected, selectedId, deleteProduct, selectedProduct } = props;
-
-  console.log('selectedProduct', selectedProduct)
 
   return (
     <Toolbar
@@ -164,25 +161,36 @@ const EnhancedTableToolbar = props => {
           {numSelected} selected
         </Typography>
       ) : (
-        <Typography className={classes.title} variant="h6" id="tableTitle">
-          Products
+          <Typography className={classes.title} variant="h6" id="tableTitle">
+            Products
         </Typography>
-      )}
-        {numSelected === 1 ? (<EditIcon style={{marginRight: '20px'}} onClick={() => props.props.props.history.push('/edit', selectedProduct)}></EditIcon>): null}
-        <AddIcon  onClick={() => props.props.props.history.push('/add')}></AddIcon>
+        )}
+      {numSelected === 1 ? (
+        <Tooltip title="Edit Product" aria-label="add" style={{ marginRight: '20px' }}>
+          <Fab size="small" color="primary" className={classes.fab}>
+            <EditIcon  onClick={() => props.props.props.history.push('/edit', selectedProduct)}></EditIcon>
+          </Fab>
+        </Tooltip>
+      ) : null}
+
+      <Tooltip title="Add Product" aria-label="add">
+        <Fab size="small" color="primary" className={classes.fab}>
+          <AddIcon onClick={() => props.props.props.history.push('/add')}></AddIcon>
+        </Fab>
+      </Tooltip>
       {numSelected > 0 ? (
         <Tooltip title="Delete">
           <IconButton aria-label="delete" onClick={() => onDelete(selectedId, deleteProduct)}>
-            <DeleteIcon  />
+            <DeleteIcon />
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
-          <IconButton aria-label="filter list">
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )}
+          <Tooltip title="Filter list">
+            <IconButton aria-label="filter list">
+              <FilterListIcon />
+            </IconButton>
+          </Tooltip>
+        )}
     </Toolbar>
   );
 };
@@ -216,8 +224,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function EnhancedTable(props) {
-    console.log('props', props)
-    const rows = props.products;
+  console.log('props', props)
+  const rows = props.products;
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -283,7 +291,7 @@ export default function EnhancedTable(props) {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} selectedId={selected} deleteProduct={props.deleteProduct} props={props} selectedProduct={selectedProduct()}/>
+        <EnhancedTableToolbar numSelected={selected.length} selectedId={selected} deleteProduct={props.deleteProduct} props={props} selectedProduct={selectedProduct()} />
         <TableContainer>
           <Table
             className={classes.table}
@@ -327,7 +335,7 @@ export default function EnhancedTable(props) {
                         {row.product_name}
                       </TableCell>
                       <TableCell align="right">{row.product_description}</TableCell>
-                      <TableCell align="right">{row.is_active ? 'Yes': 'No'}</TableCell>
+                      <TableCell align="right">{row.is_active ? 'Yes' : 'No'}</TableCell>
                       <TableCell align="right">${row.price}</TableCell>
                       <TableCell align="right">${row.offer_price}</TableCell>
                       <TableCell align="right">{formatDate(row.offer_start_at)}</TableCell>
@@ -353,7 +361,7 @@ export default function EnhancedTable(props) {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
-      
+
     </div>
   );
 }

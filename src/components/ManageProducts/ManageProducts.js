@@ -32,7 +32,7 @@ const mapStatesToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onDeleteProduct: (ids) => dispatch({ type: 'DELETE_PRODUCT', payload: ids }),
+        onDeleteProduct: (ids) => dispatch(productActions.deleteProduct(ids)),
         onFetchProducts: () => {
             return dispatch(productActions.fetchProducts())
         }

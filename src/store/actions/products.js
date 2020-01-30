@@ -12,6 +12,12 @@ export const addProduct = (productData) => {
         payload: productData
     }
 }
+export const deleteProduct = (ids) => {
+    return { 
+        type: actionTypes.DELETE_PRODUCT,
+        payload: ids
+    }
+}
 export const editProduct = (productData) => {
     return { 
         type: actionTypes.UPDATE_PRODUCT,
