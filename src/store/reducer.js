@@ -6,7 +6,6 @@ const initialState = {
     products: [],
     filterCriteria: {
         productName: ''
-
     }
 };
 

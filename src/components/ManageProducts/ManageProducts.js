@@ -13,9 +13,9 @@ class ManageProducts extends Component {
             this.props.onFetchProducts();
         }
     }
-    filter (event) {
+    filter(event) {
         event.persist()
-       this.props.onFilter(event.target.value)
+        this.props.onFilter(event.target.value)
     }
     onFilterClick() {
         console.log('onFilterClick');
@@ -34,8 +34,6 @@ class ManageProducts extends Component {
 const mapStatesToProps = state => {
     return {
         products: state.products.filter((product) => {
-
-
             return product.product_name.trim().toLowerCase().includes(state.filterCriteria.productName.trim().toLowerCase())
         }),
         isProductFetched: state.isProductFetched,
@@ -46,11 +44,11 @@ const mapStatesToProps = state => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onDeleteProduct: (ids) => dispatch(productActions.deleteProduct(ids)),
-        onFilter: (value) => dispatch({type: 'FILTER', payload: value}),
+        onFilter: (value) => dispatch({ type: 'FILTER', payload: value }),
         onFetchProducts: () => {
             return dispatch(productActions.fetchProducts())
         },
-        onFilterClick: () => dispatch({type: 'FILTER_CLICK'}),
+        onFilterClick: () => dispatch({ type: 'FILTER_CLICK' }),
     }
 }
 
