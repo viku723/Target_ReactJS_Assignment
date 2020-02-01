@@ -4,7 +4,10 @@ const initialState = {
     isProductFetched: false,
     isFilter: false,
     products: [],
-    filterProducts: []
+    filterCriteria: {
+        productName: ''
+
+    }
 };
 
 const reducer = (state = initialState, action) => {
@@ -56,9 +59,10 @@ const reducer = (state = initialState, action) => {
         case 'FILTER': {
             return {
                 ...state,
-                filterProducts: state.products.filter((item) => {
-                    return item.product_name.toLowerCase().includes(action.payload.toLowerCase())
-                })
+                filterCriteria: {
+                    ...state.filterCriteria,
+                    productName: action.payload
+                }
             };
         }
         default: {

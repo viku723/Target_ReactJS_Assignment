@@ -33,10 +33,13 @@ class ManageProducts extends Component {
 
 const mapStatesToProps = state => {
     return {
-        products: state.products,
+        products: state.products.filter((product) => {
+
+
+            return product.product_name.trim().toLowerCase().includes(state.filterCriteria.productName.trim().toLowerCase())
+        }),
         isProductFetched: state.isProductFetched,
-        isFilter: state.isFilter,
-        filterProducts: state.filterProducts
+        isFilter: state.isFilter
     }
 }
 

@@ -190,8 +190,8 @@ const EnhancedTableToolbar = props => {
         </Tooltip>
       ) : (
           <Tooltip title="Filter list">
-            <IconButton aria-label="filter list">
-              <FilterListIcon onClick={() => props.props.onFilterClick()} />
+            <IconButton aria-label="filter list" onClick={() => props.props.onFilterClick()} >
+              <FilterListIcon />
             </IconButton>
           </Tooltip>
         )}
@@ -229,12 +229,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function EnhancedTable(props) {
   console.log('props', props)
-  let rows;
-  if (props.props.isFilter && props.props.filterProducts.length > 0) {
-    rows = props.props.filterProducts;
-  } else  {
-    rows = props.products;
-  }
+  const rows = props.products;
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
